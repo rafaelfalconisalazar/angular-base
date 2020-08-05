@@ -4,6 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { EmployeeService } from '../resources/employee.service';
 import { Employee } from '../resources/employee.model';
+import { MatDialog } from '@angular/material/dialog';
+import { EmployeemodalComponent } from '../employeemodal/employeemodal.component';
+
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -11,11 +14,12 @@ import { Employee } from '../resources/employee.model';
 })
 export class EmployeeComponent implements OnInit {
 
-  displayedColums: string[] = ['id','active','area','surname'];
+  displayedColums: string[] = ['id', 'active', 'area', 'surname', 'options'];
   dataSource: MatTableDataSource<Employee>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(private employeeService: EmployeeService) {
+
+  constructor(private employeeService: EmployeeService, private dialog:MatDialog) {
 
   }
 
@@ -29,9 +33,24 @@ export class EmployeeComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Employee>(data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(data);
 
       }
+    )
+  }
+
+  create(){
+    const dialogRef=this.dialog.open(EmployeemodalComponent);
+    dialogRef.componentInstance.edit=false;
+    dialogRef.afterClosed().subscribe(
+      result=>this.synch()
+    )
+  }
+  edit(employee:Employee){
+    const dialogRef=this.dialog.open(EmployeemodalComponent);
+    dialogRef.componentInstance.edit=true;
+    dialogRef.componentInstance.employee=employee;
+    dialogRef.afterClosed().subscribe(
+      result=>this.synch()
     )
   }
 

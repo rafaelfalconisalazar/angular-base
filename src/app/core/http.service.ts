@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {Observable, throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import {Error} from './error.model';
+import { Error } from './error.model';
 
 @Injectable()
 export class HttpService {
@@ -139,7 +139,7 @@ export class HttpService {
     const contentType = response.headers.get('content-type');
     if (contentType) {
       if (contentType.indexOf('application/pdf') !== -1) {
-        const blob = new Blob([response.body], {type: 'application/pdf'});
+        const blob = new Blob([response.body], { type: 'application/pdf' });
         if (this.printDirectly) {
           const iFrame = document.createElement('iframe');
           iFrame.src = URL.createObjectURL(blob);
@@ -160,7 +160,6 @@ export class HttpService {
 
 
   private handleError(response): any {
-    console.log(response);
 
     let error: Error;
     if (response.status === HttpService.UNAUTHORIZED) {
@@ -168,22 +167,25 @@ export class HttpService {
         duration: 2000
       });
       this.router.navigate(['']);
+      this.successfulNotification = undefined
       return throwError(response.error);
     } else {
       try {
+        
         if (response.status === HttpService.NOT_FOUND) {
-          error = {error: response.error, message: '', path: ''};
+          error = { error: response.error, message: '', path: '' };
         } else if (response.status === 0 || response.status === 500) {
-          error = {error: 'No server response', message: 'No server response', path: ''};
+          error = { error: 'No server response', message: 'No server response', path: '' };
         } else {
-          console.log('ss' + response.status);
-          error = {error: response.error, message: response.message, path: ''};
+          error = { error: response.error.status, message: response.message, path: '' };
         }
         this.snackBar.open(error.error, 'Error', {
           duration: 5000
         });
+        this.successfulNotification = undefined
         return throwError(response);
       } catch (e) {
+        this.successfulNotification = undefined
         this.snackBar.open('No server response', 'Error', {
           duration: 5000
         });

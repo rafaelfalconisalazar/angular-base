@@ -14,4 +14,16 @@ export class EmployeeService{
     readAll(): Observable<Employee[]>{
         return this.httpService.get(EmployeeService.ENDPOINT);
     }
+
+    create(employee:Employee):Observable<Employee>{
+        return this.httpService.post(EmployeeService.ENDPOINT,employee);
+    }
+
+    edit(id:String,employe:Employee):Observable<Employee>{
+        return this.httpService.put(EmployeeService.ENDPOINT+'\\'+id,employe);      
+    }
+
+    read(id:String):Observable<Employee>{
+        return this.httpService.get(EmployeeService.ENDPOINT+'\\'+id);      
+    }
 }

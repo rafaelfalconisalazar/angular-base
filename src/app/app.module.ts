@@ -30,13 +30,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeService } from './resources/employee.service';
-import { EmployeemodalComponent } from './employeemodal/employeemodal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
-    EmployeemodalComponent
+    AppRoutingModule.COMPONET_FACTORY
   ],
   imports: [
     CoreModule,
@@ -72,6 +71,7 @@ import { EmployeemodalComponent } from './employeemodal/employeemodal.component'
     DataService,
     Location,
     { provide: LocationStrategy, useClass: PathLocationStrategy }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[AppRoutingModule.COMPONET_FACTORY]
 })
 export class AppModule { }
