@@ -10,7 +10,7 @@ import {Error} from './error.model';
 @Injectable()
 export class HttpService {
   //static API_END_POINT = 'http://appssoluciones.com/tpvonline/factura-online/web/admin/';
-  static API_END_POINT = 'http://127.0.0.1:8000/admin/';
+  static API_END_POINT = 'http://localhost:8080/api/v0/';
   static UNAUTHORIZED = 401;
   static NOT_FOUND = 404;
 

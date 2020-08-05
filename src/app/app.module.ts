@@ -28,10 +28,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeService } from './resources/employee.service';
+import { EmployeemodalComponent } from './employeemodal/employeemodal.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmployeeComponent,
+    EmployeemodalComponent
   ],
   imports: [
     CoreModule,
@@ -63,6 +68,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSlideToggleModule
   ],
   providers: [
+    EmployeeService,
     DataService,
     Location,
     { provide: LocationStrategy, useClass: PathLocationStrategy }],
